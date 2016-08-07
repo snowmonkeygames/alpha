@@ -2,24 +2,24 @@ function init() {
 
   var stage = new createjs.Stage("pongCanvas");
   createjs.Ticker.addEventListener("tick", tick);
-
-  var canvasWidth = 500;
-  var canvasHeight = 500;
+  createjs.Ticker.setFPS(60);
+  createjs.Ticker.useRAF = true;
 
   var pongBall = new createjs.Shape();
   var ballDirection = "up";
 
   pongBall.graphics.beginFill("red").drawCircle(0, 0, 25);
-  pongBall.x = canvasWidth / 2;
-  pongBall.y = canvasHeight / 2;
+  pongBall.x = pongCanvas.width / 2;
+  pongBall.y = pongCanvas.height / 2;
 
   stage.addChild(pongBall);
+  pongBall.shadow = new createjs.Shadow("#000000", 5, 5, 10);
 
   function tick(event) {
     if (ballDirection == "down") {
       pongBall.y += 5;
       stage.update();
-      if (pongBall.y >= canvasHeight) {
+      if (pongBall.y >= pongCanvas.height) {
         console.log("Reversing ball direction... (going up!)");
         ballDirection = "up";
       }
