@@ -5,15 +5,16 @@ function init() {
   createjs.Ticker.setFPS(60);
   createjs.Ticker.useRAF = true;
 
-  var pongBall = new createjs.Shape();
+  var pongBall = new createjs.Bitmap("pongball.png");
+
+  //var pongBall = new createjs.Shape();
   var ballDirection = "up";
 
-  pongBall.graphics.beginFill("red").drawCircle(0, 0, 25);
   pongBall.x = pongCanvas.width / 2;
   pongBall.y = pongCanvas.height / 2;
 
   stage.addChild(pongBall);
-  pongBall.shadow = new createjs.Shadow("#000000", 5, 5, 10);
+  pongBall.shadow = new createjs.Shadow("#000000", 5, 5, 20);
 
   function tick(event) {
     if (ballDirection == "down") {
