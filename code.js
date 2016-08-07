@@ -1,32 +1,38 @@
 function init() {
 
-  var stage = new createjs.Stage("demoCanvas");
+  var stage = new createjs.Stage("pongCanvas");
   createjs.Ticker.addEventListener("tick", tick);
 
-  var spinner1 = new createjs.Shape();
-  spinner1.graphics.beginStroke("rgba(0,0,255,0.5)").setStrokeStyle(5).arc(0,0,20,0, Math.PI/2);
-  spinner1.x = 100;
-  spinner1.y = 100;
+  var canvasWidth = 500;
+  var canvasHeight = 500;
 
-  var spinner2 = new createjs.Shape();
-  spinner2.graphics.beginStroke("rgba(255,0,0,0.5)").setStrokeStyle(5).arc(0,0,20,0, Math.PI/2);
-  spinner2.x = 100;
-  spinner2.y = 100;
+  var pongBall = new createjs.Shape();
+  var ballDirection = "up";
 
-  var spinner3 = new createjs.Shape();
-  spinner3.graphics.beginStroke("rgba(0,255,0,0.5)").setStrokeStyle(5).arc(100,10,10,0, Math.PI*1.5);
-  spinner3.x = 100;
-  spinner3.y = 100;
+  pongBall.graphics.beginFill("red").drawCircle(0, 0, 25);
+  pongBall.x = canvasWidth / 2;
+  pongBall.y = canvasHeight / 2;
 
-  stage.addChild(spinner1);
-  stage.addChild(spinner2);
-  stage.addChild(spinner3);
+  stage.addChild(pongBall);
 
   function tick(event) {
-    spinner1.rotation += 1;
-    spinner2.rotation -= 2;
-    spinner3.rotation -= 3;
-    stage.update();
+    if (ballDirection == "down") {
+      pongBall.y += 5;
+      stage.update();
+      if (pongBall.y >= canvasHeight) {
+        console.log("Reversing ball direction... (going up!)");
+        ballDirection = "up";
+      }
+    }
+    if (ballDirection == "up" && pongBall.y > 0) {
+      pongBall.y -= 5;
+      stage.update();
+      if (pongBall.y <= 0) {
+        console.log("Reversing ball direction... (going down!)");
+        ballDirection = "down";
+      }
+    }
   }
+
 
 }
