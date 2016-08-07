@@ -6,30 +6,57 @@ function init() {
   createjs.Ticker.useRAF = true;
 
   var pongBall = new createjs.Bitmap("pongball.png");
-  pongBall.shadow = new createjs.Shadow("#000000", 2, 5, 10);
+  pongBall.shadow = new createjs.Shadow("#0022ff", 2, 2, 10);
   var ballDirection = "up";
   pongBall.x = (pongCanvas.width / 2) - 25;
   pongBall.y = (pongCanvas.height / 2) - 25;
 
-  var topBar = new createjs.Bitmap("top.png");
-  topBar.x = 0;
-  topBar.y = 0;
+  var topBarBlue = new createjs.Bitmap("top-blue.png").set({x:0,y:0});
+  var bottomBarBlue = new createjs.Bitmap("bottom-blue.png").set({x:0,y:pongCanvas.height - 100});
+  var topBarOrange = new createjs.Bitmap("top-orange.png").set({x:0,y:0});
+  var bottomBarOrange = new createjs.Bitmap("bottom-orange.png").set({x:0,y:pongCanvas.height - 100});
 
-  var bottomBar = new createjs.Bitmap("bottom.png");
-  bottomBar.x = 0;
-  bottomBar.y = pongCanvas.height - 100;
+  var bottomHit = false;
+  var topHit = false;
+  var timer = false;
+  var timerCount = 0;
 
   stage.addChild(pongBall);
-  stage.addChild(topBar);
-  stage.addChild(bottomBar);
+
+  stage.addChild(topBarBlue);
+  stage.addChild(bottomBarBlue);
 
   function tick(event) {
+    if (timer == true){
+      timerCount += 1;
+      console.log("Timer: " + timerCount)
+    }
+    if (timerCount > 10){
+      stage.removeChild(topBarOrange);
+      stage.removeChild(topBarBlue);
+      stage.addChild(topBarBlue);
+      stage.addChild(bottomBarBlue);
+      timer = false;
+      topHit = false;
+      bottomHit = false;
+      timerCount = 0;
+    }
+    if (bottomHit == true && timer == false){
+      timer = true;
+      stage.addChild(bottomBarOrange);
+    }
+    if (topHit == true && timer == false){
+      timer = true;
+      stage.removeChild(topBarBlue);
+      stage.addChild(topBarOrange);
+    }
     if (ballDirection == "down") {
       pongBall.y += 5;
       stage.update();
       if (pongBall.y >= pongCanvas.height - 75) {
         console.log("Reversing ball direction... (going up!)");
         ballDirection = "up";
+        bottomHit = true;
       }
     }
     if (ballDirection == "up" && pongBall.y > 0) {
@@ -38,6 +65,7 @@ function init() {
       if (pongBall.y <= 25) {
         console.log("Reversing ball direction... (going down!)");
         ballDirection = "down";
+        topHit = true;
       }
     }
   }
