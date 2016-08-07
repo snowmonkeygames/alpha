@@ -27,7 +27,7 @@ function init() {
     if (ballDirection == "down") {
       pongBall.y += 5;
       stage.update();
-      if (pongBall.y >= pongCanvas.height) {
+      if (pongBall.y >= pongCanvas.height - 75) {
         console.log("Reversing ball direction... (going up!)");
         ballDirection = "up";
       }
@@ -35,7 +35,7 @@ function init() {
     if (ballDirection == "up" && pongBall.y > 0) {
       pongBall.y -= 5;
       stage.update();
-      if (pongBall.y <= 0) {
+      if (pongBall.y <= 25) {
         console.log("Reversing ball direction... (going down!)");
         ballDirection = "down";
       }
