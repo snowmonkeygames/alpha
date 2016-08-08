@@ -28,6 +28,19 @@ function init() {
   stage.addChild(topBarBlue);
   stage.addChild(bottomBarBlue);
 
+  bottomBarBlue.addEventListener("mousedown", bottomBarClicked);
+  bottomBarBlue.addEventListener("pressup", bottomBarUnclicked);
+
+  function bottomBarClicked () {
+    stage.removeChild(bottomBarBlue);
+    stage.addChild(bottomBarOrange);
+  }
+
+  function bottomBarUnclicked () {
+    stage.removeChild(bottomBarOrange);
+    stage.addChild(bottomBarBlue);
+  }
+
   function tick(event) {
     if (timer == true){
       timerCount += 1;
@@ -42,11 +55,6 @@ function init() {
       topHit = false;
       bottomHit = false;
       timerCount = 0;
-    }
-    if (bottomHit == true && timer == false){
-      timer = true;
-      stage.removeChild(bottomBarBlue);
-      stage.addChild(bottomBarOrange);
     }
     if (topHit == true && timer == false){
       timer = true;
