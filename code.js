@@ -5,6 +5,15 @@ function init() {
   createjs.Ticker.setFPS(60);
   createjs.Ticker.useRAF = true;
 
+  createjs.Sound.registerSound({id:"bleep", src:"bleep.mp3"});
+  createjs.Sound.addEventListener("fileload", handleFileLoad);
+function handleFileLoad(event) {
+    // A sound has been preloaded.
+    console.log("Preloaded:", event.id, event.src);
+}
+
+
+
   var pongBall = new createjs.Bitmap("pongball.png");
   pongBall.shadow = new createjs.Shadow("#0022ff", 2, 2, 10);
   pongBall.x = (pongCanvas.width / 2) - 25;
@@ -67,6 +76,7 @@ function init() {
       if (pongBall.y >= pongCanvas.height - 75) {
         console.log("Reversing ball direction... (going up!)");
         ballDirection = "up";
+        createjs.Sound.play("bleep");
         bottomHit = true;
       }
     }
@@ -75,6 +85,7 @@ function init() {
       stage.update();
       if (pongBall.y <= 25) {
         console.log("Reversing ball direction... (going down!)");
+        createjs.Sound.play("bleep");
         ballDirection = "down";
         topHit = true;
       }
