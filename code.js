@@ -11,6 +11,7 @@ function init() {
   pongBall.x = (pongCanvas.width / 2) - 25;
   pongBall.y = (pongCanvas.height / 2) - 25;
 
+  var bg = new createjs.Bitmap("bg.png").set({x:0,y:0});
   var topBarBlue = new createjs.Bitmap("top-blue.png").set({x:0,y:0});
   var bottomBarBlue = new createjs.Bitmap("bottom-blue.png").set({x:0,y:pongCanvas.height - 100});
   var topBarOrange = new createjs.Bitmap("top-orange.png").set({x:0,y:0});
@@ -21,8 +22,8 @@ function init() {
   var timer = false;
   var timerCount = 0;
 
+  stage.addChild(bg);
   stage.addChild(pongBall);
-
   stage.addChild(topBarBlue);
   stage.addChild(bottomBarBlue);
 
